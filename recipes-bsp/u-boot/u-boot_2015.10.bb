@@ -25,8 +25,10 @@ DEFAULT_PREFERENCE_sun4i="1"
 DEFAULT_PREFERENCE_sun5i="1"
 DEFAULT_PREFERENCE_sun7i="1"
 
-SRC_URI += "file://boot.cmd \
-"
+SRC_URI += " \
+  file://boot.cmd \
+  file://uEnv.txt \
+  "
 
 SRCREV = "5ec0003b19cbdf06ccd6941237cbc0d1c3468e2d"
 
@@ -41,4 +43,12 @@ UBOOT_ENV = "boot"
 
 do_compile_append() {
     ${S}/tools/mkimage -C none -A arm -T script -d ${WORKDIR}/boot.cmd ${WORKDIR}/${UBOOT_ENV_BINARY}
+    ${S}/tools/mkenvimage -s 0x4200 -o ${WORKDIR}/uboot.env ${WORKDIR}/uEnv.txt
+}
+
+do_install_append () {
+    if [ -e ${WORKDIR}/uboot.env ] ; then
+        install -d ${DEPLOY_DIR_IMAGE}
+        install -m 0444 ${WORKDIR}/uboot.env ${DEPLOY_DIR_IMAGE}
+    fi
 }
