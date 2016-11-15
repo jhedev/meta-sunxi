@@ -43,12 +43,10 @@ UBOOT_ENV = "boot"
 
 do_compile_append() {
     ${S}/tools/mkimage -C none -A arm -T script -d ${WORKDIR}/boot.cmd ${WORKDIR}/${UBOOT_ENV_BINARY}
-    ${S}/tools/mkenvimage -s 0x4200 -o ${WORKDIR}/uboot.env ${WORKDIR}/uEnv.txt
+    ${S}/tools/mkenvimage -s 131072 -o ${WORKDIR}/uboot.env ${WORKDIR}/uEnv.txt
 }
 
 do_install_append () {
-    if [ -e ${WORKDIR}/uboot.env ] ; then
         install -d ${DEPLOY_DIR_IMAGE}
         install -m 0444 ${WORKDIR}/uboot.env ${DEPLOY_DIR_IMAGE}
-    fi
 }
