@@ -43,6 +43,11 @@ UBOOT_ENV = "boot"
 
 do_compile_append() {
     ${S}/tools/mkimage -C none -A arm -T script -d ${WORKDIR}/boot.cmd ${WORKDIR}/${UBOOT_ENV_BINARY}
+
+    if ${@bb.utils.contains('DISTRO_FEATURES','development-image','false','true',d)}; then
+        # Non-development image
+        ${S}/tools/mkimage -C none -A arm -T script -d ${WORKDIR}/boot_silent.cmd ${WORKDIR}/${UBOOT_ENV_BINARY}
+    fi
     ${S}/tools/mkenvimage -s 131072 -o ${WORKDIR}/uboot.env ${WORKDIR}/uEnv.txt
 }
 
