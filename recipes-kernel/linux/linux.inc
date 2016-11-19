@@ -111,6 +111,13 @@ do_configure_prepend() {
         kernel_conf_variable CMDLINE \"${CMDLINE_NFSROOT_USB} ${CMDLINE_DEBUG}\"
     fi
 
+    kernel_conf_variable SPI_SUN7I y
+    kernel_conf_variable SPI_DEBUG y
+    kernel_conf_variable SPI_SPIDEV y
+    kernel_conf_variable SND_SPI y
+    kernel_conf_variable SND_SOC_I2C_AND_SPI y
+    kernel_conf_variable SUN7I_SPI_NDMA y
+
     sed -e "${CONF_SED_SCRIPT}" \
     < '${WORKDIR}/defconfig' >>'${B}/.config'
 
