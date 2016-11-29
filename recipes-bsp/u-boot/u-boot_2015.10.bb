@@ -27,6 +27,7 @@ DEFAULT_PREFERENCE_sun7i="1"
 
 SRC_URI += " \
   file://boot.cmd \
+  file://boot_silent.cmd \
   file://uEnv.txt \
   "
 
